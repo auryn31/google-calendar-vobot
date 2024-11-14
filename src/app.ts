@@ -4,12 +4,14 @@ dotenv.config();
 
 import express, { RequestHandler } from 'express';
 import { getAuthUrl, handleCallback, getCalendarEvents } from './google_auth';
+import path from 'path';
 
 
 const app = express();
 
 // Add middleware to parse JSON bodies
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Add this before creating the OAuth2Client
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -24,10 +26,10 @@ const handleGoogleCallback: RequestHandler = async (req, res) => {
     const code = req.query.code as string;
     try {
         const token = await handleCallback(code);
-        res.json({ token });
+        res.redirect(`/#token=${token}`);
     } catch (error) {
         console.error('Authentication error:', error);
-        res.status(500).json({ error: 'Authentication failed' });
+        res.redirect('/#error=Authentication failed');
     }
 };
 

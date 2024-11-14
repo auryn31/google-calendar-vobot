@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar API Integration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4285f4;
+            --secondary: #34a853;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --gray: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .auth-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--gray);
+            border-radius: 8px;
+        }
+
+        .google-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--light);
+            color: var(--dark);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .google-btn:hover {
+            background: #f8f8f8;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .google-btn img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .docs-section {
+            margin: 3rem 0;
+        }
+
+        .endpoint {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .code {
+            font-family: monospace;
+            background: var(--dark);
+            color: var(--light);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        #token-display {
+            display: none;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #e8f0fe;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: var(--gray);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Calendar API Integration</h1>
+            <p class="subtitle">Seamlessly integrate Google Calendar into your applications</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Easy Authentication</h3>
+                <p>Simple OAuth2 integration with Google Calendar API</p>
+            </div>
+            <div class="feature-card">
+                <h3>Event Management</h3>
+                <p>Read calendar events effortlessly</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure</h3>
+                <p>Built with security best practices and token management</p>
+            </div>
+        </div>
+
+        <div class="auth-section">
+            <h2>Try It Out</h2>
+            <p>Connect with your Google Calendar to get started</p>
+            <br>
+            <a href="/auth/google" class="google-btn">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; width:24px; height: 24px;">
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                    </path>
+                    <path fill="#4285F4"
+                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                    </path>
+                    <path fill="#FBBC05"
+                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                    </path>
+                    <path fill="#34A853"
+                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                    </path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+                <span style="display: none;">Sign in with Google</span>
+                Sign in with Google
+            </a>
+            <div id="token-display"></div>
+        </div>
+
+        <div class="docs-section">
+            <h2>API Documentation</h2>
+
+            <div class="endpoint">
+                <h3>Authentication</h3>
+                <p>Endpoint: <code>/auth/google</code></p>
+                <p>Method: GET</p>
+                <p>Initiates the Google OAuth2 flow</p>
+            </div>
+
+            <div class="endpoint">
+                <h3>Get Calendar Events</h3>
+                <p>Endpoint: <code>/calendar/events</code></p>
+                <p>Method: GET</p>
+                <p>Headers required:</p>
+                <div class="code">
+                    {
+                    "Authorization": "YOUR_JWT_TOKEN"
+                    }
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check for token in URL hash
+        const hashParams = new URLSearchParams(window.location.hash.substr(1));
+        const token = hashParams.get('token');
+
+        if (token) {
+            const tokenDisplay = document.getElementById('token-display');
+            tokenDisplay.style.display = 'block';
+            tokenDisplay.innerHTML = `
+                <h3>Your JWT Token:</h3>
+                <p>${token}</p>
+                <small>Store this token securely for API requests</small>
+            `;
+            // Clean URL
+            history.replaceState(null, null, ' ');
+        }
+    </script>
+
+    <footer style="background: var(--gray); padding: 2rem 0; margin-top: 4rem; text-align: center;">
+        <div class="container">
+            <a href="/privacy.html" style="color: var(--primary); text-decoration: none; margin: 0 1rem;">Privacy Policy</a>
+            <a href="/terms.html" style="color: var(--primary); text-decoration: none; margin: 0 1rem;">Terms of Service</a>
+        </div>
+    </footer>
+</body>
+
+</html>
