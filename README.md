@@ -2,6 +2,8 @@
 
 A full-stack application that provides Google Calendar integration with a clean web interface and a companion UI app for Vobot devices.
 
+YouTube Video: https://youtu.be/9j899Uzl83U
+
 ## Features
 
 - OAuth2 authentication with Google Calendar API
