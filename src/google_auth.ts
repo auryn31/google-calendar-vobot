@@ -82,11 +82,17 @@ const refreshTokenIfNeeded = async (
 }
 
 const fetchCalendarEvents = async (client: OAuth2Client) => {
+    // Get today's start and end times
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
     const calendar = google.calendar({ version: 'v3', auth: client });
     const response = await calendar.events.list({
         calendarId: 'primary',
-        timeMin: new Date().toISOString(),
-        maxResults: 10,
+        timeMin: today.toISOString(),
+        timeMax: tomorrow.toISOString(),
         singleEvents: true,
         orderBy: 'startTime',
     });
